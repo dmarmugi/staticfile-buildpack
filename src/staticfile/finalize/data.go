@@ -80,9 +80,9 @@ http {
     root <%= ENV["APP_ROOT"] %>/public;
 
    {{if .ForceHTTPS}}
-	 set $updated_host = $host;
+	 set $updated_host $host;
 	 if ($http_x_forwarded_host != "") {
-       set $updated_host $http_x_forwarded_host
+       set $updated_host $http_x_forwarded_host;
      } 
 
      if ($http_x_forwarded_proto != "https") {
@@ -92,7 +92,7 @@ http {
 	<% if ENV["FORCE_HTTPS"] %>
 	 set $updated_host $host;
 	 if ($http_x_forwarded_host != "") {
-       set $updated_host $http_x_forwarded_host
+       set $updated_host $http_x_forwarded_host;
      } 
 
      if ($http_x_forwarded_proto != "https") {
