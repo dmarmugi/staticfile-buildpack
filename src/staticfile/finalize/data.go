@@ -90,7 +90,7 @@ http {
 	 }
    {{else}}
 	<% if ENV["FORCE_HTTPS"] %>
-	 set $updated_host = $host;
+	 set $updated_host $host;
 	 if ($http_x_forwarded_host != "") {
        set $updated_host $http_x_forwarded_host
      } 
