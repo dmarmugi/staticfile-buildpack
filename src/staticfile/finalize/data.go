@@ -81,15 +81,23 @@ http {
 
    {{if .ForceHTTPS}}
      if ($http_x_forwarded_proto != "https") {
-       return 301 https://$host$request_uri;
+	   if ($http_x_forwarded_host != "") {
+	     return 301 https://$http_x_forwarded_host$request_uri;
+	   } else {
+	     return 301 https://$host$request_uri;
+	   }
      }
    {{else}}
-   <% if ENV["FORCE_HTTPS"] %>
-     if ($http_x_forwarded_proto != "https") {
-       return 301 https://$host$request_uri;
-     }
-   <% end %>
-   {{end}}
+	<% if ENV["FORCE_HTTPS"] %>
+	  if ($http_x_forwarded_proto != "https") {
+		if ($http_x_forwarded_host != "") {
+		  return 301 https://$http_x_forwarded_host$request_uri;
+		} else {
+		  return 301 https://$host$request_uri;
+		}
+	  }
+	<% end %>
+	{{end}}
 
 
     location / {
